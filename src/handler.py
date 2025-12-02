@@ -53,7 +53,7 @@ def get_config(event: dict) -> dict:
     }
 
 
-def main(event: dict, context: dict) -> dict:
+def main(event: dict, context) -> dict:
     """Main handler function for PC Duration Alert.
     
     Monitors drivers' HOS status and alerts when a driver has been in
@@ -66,20 +66,20 @@ def main(event: dict, context: dict) -> dict:
     
     Args:
         event: Event payload containing optional configuration overrides
-        context: Samsara function context with API token
+        context: Lambda context object (provided by Samsara Functions runtime)
         
     Returns:
         Response with analysis summary and any alerts triggered
     """
     print("🚛 Starting PC Duration Alert Monitor...")
     
-    # Get API token from context
-    api_token = context.get("samsara_api_token")
+    # Get API token from environment variable (set in Samsara Functions dashboard)
+    api_token = os.environ.get("SAMSARA_API_KEY") or os.environ.get("SAMSARA_API_TOKEN")
     if not api_token:
         return {
             "statusCode": 401,
             "body": {
-                "error": "Missing Samsara API token in context"
+                "error": "Missing SAMSARA_API_KEY environment variable. Set it in your Function's environment variables."
             }
         }
     
