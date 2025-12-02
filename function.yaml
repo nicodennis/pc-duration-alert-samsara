@@ -1,0 +1,19 @@
+id: internal-nicodennis-duty-status-alert-samsara-function
+name: duty-status-alert-samsara-function
+description: Alert when a driver has been in PC for more than 16 hours
+handler: src.handler.main
+runtime: python3.11
+created_at: 2025-12-02T21:34:20Z
+created_by: nico.dennis <unknown>
+tags: []
+notes: |
+  # Duty Status Alert - PC Duration Monitor
+  
+  Monitors drivers' Hours of Service (HOS) logs and alerts when a driver has been in **Personal Conveyance (PC)** status for more than 16 consecutive hours (configurable).
+  
+  ## How It Works
+  
+  1. Fetches all drivers from your Samsara organization (optionally filtered by tags)
+  2. Retrieves HOS logs for the past 24 hours (configurable)
+  3. Analyzes each driver's duty status history to find consecutive PC time
+  4. Alerts via console, webhook, and/or email when a driver exceeds the threshold
