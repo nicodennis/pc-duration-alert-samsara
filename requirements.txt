@@ -1,1 +1,1 @@
-requests>=2.31.0
+# Dependencies provided by Samsara Functions Lambda Layer
