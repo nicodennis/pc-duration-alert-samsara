@@ -82,16 +82,24 @@ def main(event, _):
                 except Exception as e:
                     print(corr_id, f"Parse error: {e}")
     
+    # Build list of driver names in violation for easy visibility
+    drivers_in_violation = [f"{a['driver_name']} ({a['hours_in_pc']}h)" for a in alerts]
+    
     result = {
         "success": True,
         "summary": {
             "drivers_checked": len(clocks),
             "drivers_in_pc": drivers_in_pc,
             "alerts_triggered": len(alerts),
-            "threshold_hours": threshold
+            "threshold_hours": threshold,
+            "drivers_in_violation": drivers_in_violation
         },
         "alerts": alerts
     }
+    
+    # Log driver names who are in violation
+    if alerts:
+        print(corr_id, f"⚠️ ALERTS: {', '.join(drivers_in_violation)}")
     
     print(corr_id, "PC Duration Alert finished", result["summary"])
     return result
